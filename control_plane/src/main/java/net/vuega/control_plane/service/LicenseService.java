@@ -77,10 +77,19 @@ public class LicenseService {
 
     private void validateLicense(Licenses license) {
         if (license.getLicenseKey() == null || license.getLicenseKey().isEmpty()) {
-            throw new IllegalArgumentException("License key is required");
+            throw new IllegalArgumentException("L   icense key is required");
+        }
+        if (license.getOperatorId() <= 0) {
+            throw new IllegalArgumentException("Operator ID is required");
+        }
+        if (license.getEndDate() == null) {
+            throw new IllegalArgumentException("End date is required");
         }
         if (license.getStartDate() == null) {
             throw new IllegalArgumentException("Start date is required");
+        }
+        if (license.getStatus() == null) {
+            throw new IllegalArgumentException("License status is required");
         }
     }
     
