@@ -1,9 +1,10 @@
-package net.vuega.control_plane.model;
+package net.vuega.control_plane.model.Licenses;
 
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -24,15 +25,20 @@ public class Licenses {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private long licenseId;
 
+    @Column(name = "operator_id", nullable = false)
     private long operatorId;
 
+    @Column(name = "license_key", nullable = false, unique = true)
     private String licenseKey;
 
+    @Column(name = "start_date", nullable = false)
     private Date startDate;
 
+    @Column(name = "end_date", nullable = false)
     private Date endDate;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
     private LicenseStatus status;
 
     public long getLicenseId() {

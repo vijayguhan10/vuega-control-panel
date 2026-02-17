@@ -1,5 +1,4 @@
-package net.vuega.control_plane.model;
-
+package net.vuega.control_plane.model.Operators;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -14,8 +13,8 @@ import net.vuega.control_plane.util.OperatorStatus;
 
 @Entity
 @Table(name = "operators")
-public class Operator {
-    
+public class Operators {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -62,5 +61,44 @@ public class Operator {
         this.status = status;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private Long operatorId;
+        private String operatorName;
+        private String companyName;
+        private OperatorStatus status;
+
+        public Builder operatorId(Long operatorId) {
+            this.operatorId = operatorId;
+            return this;
+        }
+
+        public Builder operatorName(String operatorName) {
+            this.operatorName = operatorName;
+            return this;
+        }
+
+        public Builder companyName(String companyName) {
+            this.companyName = companyName;
+            return this;
+        }
+
+        public Builder status(OperatorStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        public Operators build() {
+            Operators entity = new Operators();
+            entity.setOperatorId(operatorId);
+            entity.setOperatorName(operatorName);
+            entity.setCompanyName(companyName);
+            entity.setStatus(status);
+            return entity;
+        }
+    }
 
 }

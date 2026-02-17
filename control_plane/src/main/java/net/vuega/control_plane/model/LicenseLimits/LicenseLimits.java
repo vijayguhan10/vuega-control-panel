@@ -1,4 +1,4 @@
-package net.vuega.control_plane.model;
+package net.vuega.control_plane.model.LicenseLimits;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonSetter;
