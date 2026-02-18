@@ -5,11 +5,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.transaction.Transactional;
 import net.vuega.control_plane.dto.Operators.OperatorsDto;
 import net.vuega.control_plane.model.Operators.Operators;
 import net.vuega.control_plane.repository.Operators.OperatorRepository;
+import net.vuega.control_plane.util.OperatorStatus;
 
 @Service
 public class OperatorService {
@@ -21,6 +22,7 @@ public class OperatorService {
     }
 
     // ================= GET ALL =================
+    @Transactional
     public List<OperatorsDto> getAllOperators() {
         return operatorRepository.findAll()
                 .stream()
@@ -29,6 +31,7 @@ public class OperatorService {
     }
 
     // ================= GET BY ID =================
+    @Transactional
     public Optional<OperatorsDto> getOperatorById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("Invalid operator ID");
@@ -56,6 +59,7 @@ public class OperatorService {
     }
 
     // ================= UPDATE =================
+    @Transactional
     public OperatorsDto updateOperator(Long id, OperatorsDto dto) {
         if (id == null) {
             throw new IllegalArgumentException("Invalid operator ID");
@@ -75,17 +79,22 @@ public class OperatorService {
         return convertToDto(updated);
     }
 
-    // ================= DELETE =================
+    // ================= SOFT DELETE =================
+    @Transactional
     public void deleteOperator(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("Invalid operator ID");
         }
 
-        if (!operatorRepository.existsById(id)) {
-            throw new RuntimeException("Operator not found");
+        Operators existing = operatorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Operator not found"));
+
+        if (existing.getStatus() == OperatorStatus.INACTIVE) {
+            throw new IllegalStateException("Operator already inactive");
         }
 
-        operatorRepository.deleteById(id);
+        existing.setStatus(OperatorStatus.INACTIVE);
+        operatorRepository.save(existing);
     }
 
     // ================= MAPPING =================
