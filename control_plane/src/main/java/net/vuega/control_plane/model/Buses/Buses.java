@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import net.vuega.control_plane.util.BusStatus;
+import net.vuega.control_plane.util.BusType;
 
 @Entity
 @Table(name = "buses")
@@ -23,16 +24,17 @@ public class Buses {
     private Long busId;
 
     @Column(name = "operator_id", nullable = false)
-    private long operatorId;
+    private Long operatorId;
 
     @Column(name = "bus_number", nullable = false)
     private String busNumber;
 
     @Column(name = "bus_type", nullable = false)
-    private String busType;
+    @Enumerated(EnumType.STRING)
+    private BusType busType;
 
     @Column(name = "layout_id", nullable = false)
-    private long layoutId;
+    private Long layoutId;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -50,7 +52,7 @@ public class Buses {
         return operatorId;
     }
 
-    public void setOperatorId(long operatorId) {
+    public void setOperatorId(Long operatorId) {
         this.operatorId = operatorId;
     }
 
@@ -62,11 +64,11 @@ public class Buses {
         this.busNumber = busNumber;
     }
 
-    public String getBusType() {
+    public BusType getBusType() {
         return busType;
     }
 
-    public void setBusType(String busType) {
+    public void setBusType(BusType busType) {
         this.busType = busType;
     }
 
@@ -86,6 +88,4 @@ public class Buses {
         this.status = status;
     }
 
-    
 }
-

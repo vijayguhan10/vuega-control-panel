@@ -3,6 +3,7 @@ package net.vuega.control_plane.service.LicenseLimits;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import net.vuega.control_plane.dto.LicenseLimits.LicenseLimitsDto;
 import net.vuega.control_plane.model.LicenseLimits.LicenseLimits;
@@ -22,6 +23,7 @@ public class LicenseLimitsService {
         this.licenseRepository = licenseRepository;
     }
 
+    @Transactional
     public LicenseLimitsDto createLicenseLimits(LicenseLimitsDto dto) {
         validateForCreate(dto);
 
@@ -34,6 +36,7 @@ public class LicenseLimitsService {
         return convertToDto(saved);
     }
 
+    @Transactional
     public Optional<LicenseLimitsDto> getLicenseLimitsByLicenseId(Long licenseId) {
         if (licenseId == null) {
             throw new IllegalArgumentException("Invalid license ID");
@@ -43,6 +46,7 @@ public class LicenseLimitsService {
                 .map(this::convertToDto);
     }
 
+    @Transactional
     public LicenseLimitsDto updateLicenseLimitsByLicenseId(Long licenseId, LicenseLimitsDto dto) {
         if (licenseId == null) {
             throw new IllegalArgumentException("Invalid license ID");
@@ -64,6 +68,7 @@ public class LicenseLimitsService {
         return convertToDto(updated);
     }
 
+    @Transactional
     public void deleteLicenseLimitsByLicenseId(Long licenseId) {
         if (licenseId == null) {
             throw new IllegalArgumentException("Invalid license ID");

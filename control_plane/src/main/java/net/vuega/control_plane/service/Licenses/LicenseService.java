@@ -11,6 +11,7 @@ import net.vuega.control_plane.dto.Licenses.LicensesDto;
 import net.vuega.control_plane.model.Licenses.Licenses;
 import net.vuega.control_plane.repository.Licenses.LicenseRepository;
 import net.vuega.control_plane.repository.Operators.OperatorRepository;
+import net.vuega.control_plane.util.LicenseStatus;
 
 @Service
 public class LicenseService {
@@ -25,6 +26,7 @@ public class LicenseService {
         this.operatorRepository = operatorRepository;
     }
 
+    @Transactional
     public List<LicensesDto> getAllLicenses() {
         return licenseRepository.findAll()
                 .stream()
@@ -32,6 +34,7 @@ public class LicenseService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public Optional<LicensesDto> getLicenseById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("Invalid license ID");
@@ -41,6 +44,7 @@ public class LicenseService {
                 .map(this::convertToDto);
     }
 
+    @Transactional
     public LicensesDto createLicense(LicensesDto dto) {
         validate(dto);
 
@@ -58,6 +62,7 @@ public class LicenseService {
         return convertToDto(saved);
     }
 
+    @Transactional
     public LicensesDto updateLicense(Long id, LicensesDto dto) {
         if (id == null) {
             throw new IllegalArgumentException("Invalid license ID");
@@ -83,10 +88,16 @@ public class LicenseService {
         if (id == null) {
             throw new IllegalArgumentException("Invalid license ID");
         }
-        int deleted = licenseRepository.deleteByLicenseId(id);
-        if (deleted == 0) {
-            throw new IllegalArgumentException("License not found with ID: " + id);
+
+        Licenses existing = licenseRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("License not found with ID: " + id));
+
+        if (existing.getStatus() == LicenseStatus.INACTIVE) {
+            throw new IllegalStateException("License already inactive");
         }
+
+        existing.setStatus(LicenseStatus.INACTIVE);
+        licenseRepository.save(existing);
     }
 
     private LicensesDto convertToDto(Licenses entity) {
