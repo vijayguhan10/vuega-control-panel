@@ -1,4 +1,4 @@
-package net.vuega.control_plane.dto.Operators;
+package net.vuega.control_plane.dto.operators;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,13 +1,20 @@
-package net.vuega.control_plane.controller.Operators;
+package net.vuega.control_plane.controller.operators;
 
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import net.vuega.control_plane.dto.Operators.OperatorsDto;
-import net.vuega.control_plane.service.Operators.OperatorService;
+import net.vuega.control_plane.dto.operators.OperatorsDto;
+import net.vuega.control_plane.service.operators.OperatorService;
 
 @RestController
 @RequestMapping("/api/operators")

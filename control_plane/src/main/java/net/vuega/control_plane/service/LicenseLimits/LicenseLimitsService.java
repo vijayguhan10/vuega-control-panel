@@ -1,14 +1,14 @@
-package net.vuega.control_plane.service.LicenseLimits;
+package net.vuega.control_plane.service.licenselimits;
 
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.vuega.control_plane.dto.LicenseLimits.LicenseLimitsDto;
-import net.vuega.control_plane.model.LicenseLimits.LicenseLimits;
-import net.vuega.control_plane.repository.LicenseLimits.LicenseLimitsRepository;
-import net.vuega.control_plane.repository.Licenses.LicenseRepository;
+import net.vuega.control_plane.dto.licenselimits.LicenseLimitsDto;
+import net.vuega.control_plane.model.licenselimits.LicenseLimits;
+import net.vuega.control_plane.repository.licenselimits.LicenseLimitsRepository;
+import net.vuega.control_plane.repository.licenses.LicenseRepository;
 
 @Service
 public class LicenseLimitsService {

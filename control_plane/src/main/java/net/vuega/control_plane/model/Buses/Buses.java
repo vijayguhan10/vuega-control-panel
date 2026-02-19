@@ -1,4 +1,4 @@
-package net.vuega.control_plane.model.Buses;
+package net.vuega.control_plane.model.buses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,4 +1,4 @@
-package net.vuega.control_plane.service.Operators;
+package net.vuega.control_plane.service.operators;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.vuega.control_plane.dto.Operators.OperatorsDto;
-import net.vuega.control_plane.model.Operators.Operators;
-import net.vuega.control_plane.repository.Operators.OperatorRepository;
+import net.vuega.control_plane.dto.operators.OperatorsDto;
+import net.vuega.control_plane.model.operators.Operators;
+import net.vuega.control_plane.repository.operators.OperatorRepository;
 import net.vuega.control_plane.util.OperatorStatus;
 
 @Service

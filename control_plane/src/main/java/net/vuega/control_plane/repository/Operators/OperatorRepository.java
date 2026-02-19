@@ -1,11 +1,11 @@
-package net.vuega.control_plane.repository.Operators;
+package net.vuega.control_plane.repository.operators;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import net.vuega.control_plane.model.Operators.Operators;
+import net.vuega.control_plane.model.operators.Operators;
 import net.vuega.control_plane.util.OperatorStatus;
 
 @Repository

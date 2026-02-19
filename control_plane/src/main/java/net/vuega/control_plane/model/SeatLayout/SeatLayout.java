@@ -1,4 +1,4 @@
-package net.vuega.control_plane.model.SeatLayout;
+package net.vuega.control_plane.model.seatlayout;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

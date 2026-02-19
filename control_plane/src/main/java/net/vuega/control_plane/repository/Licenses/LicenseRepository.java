@@ -1,4 +1,4 @@
-package net.vuega.control_plane.repository.Licenses;
+package net.vuega.control_plane.repository.licenses;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import net.vuega.control_plane.model.Licenses.Licenses;
+import net.vuega.control_plane.model.licenses.Licenses;
 import net.vuega.control_plane.util.LicenseStatus;
 
 @Repository

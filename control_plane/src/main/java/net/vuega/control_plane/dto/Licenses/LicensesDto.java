@@ -1,4 +1,4 @@
-package net.vuega.control_plane.dto.Licenses;
+package net.vuega.control_plane.dto.licenses;
 
 import java.util.Date;
 

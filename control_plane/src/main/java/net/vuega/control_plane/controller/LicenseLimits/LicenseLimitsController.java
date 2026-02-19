@@ -1,4 +1,4 @@
-package net.vuega.control_plane.controller.LicenseLimits;
+package net.vuega.control_plane.controller.licenselimits;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import net.vuega.control_plane.dto.LicenseLimits.LicenseLimitsDto;
-import net.vuega.control_plane.service.LicenseLimits.LicenseLimitsService;
+import net.vuega.control_plane.dto.licenselimits.LicenseLimitsDto;
+import net.vuega.control_plane.service.licenselimits.LicenseLimitsService;
 
 @RestController
 @RequestMapping("/api/license-limits")

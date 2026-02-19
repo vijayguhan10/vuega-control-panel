@@ -1,4 +1,4 @@
-package net.vuega.control_plane.dto.Buses;
+package net.vuega.control_plane.dto.buses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package net.vuega.control_plane.controller.Licenses;
+package net.vuega.control_plane.controller.licenses;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import net.vuega.control_plane.dto.Licenses.LicensesDto;
-import net.vuega.control_plane.service.Licenses.LicenseService;
+import net.vuega.control_plane.dto.licenses.LicensesDto;
+import net.vuega.control_plane.service.licenses.LicenseService;
 
 @RestController
 @RequestMapping("/api/licenses")

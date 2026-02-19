@@ -1,4 +1,4 @@
-package net.vuega.control_plane.service.Licenses;
+package net.vuega.control_plane.service.licenses;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.vuega.control_plane.dto.Licenses.LicensesDto;
-import net.vuega.control_plane.model.Licenses.Licenses;
-import net.vuega.control_plane.repository.Licenses.LicenseRepository;
-import net.vuega.control_plane.repository.Operators.OperatorRepository;
+import net.vuega.control_plane.dto.licenses.LicensesDto;
+import net.vuega.control_plane.model.licenses.Licenses;
+import net.vuega.control_plane.repository.licenses.LicenseRepository;
+import net.vuega.control_plane.repository.operators.OperatorRepository;
 import net.vuega.control_plane.util.LicenseStatus;
 
 @Service

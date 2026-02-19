@@ -1,4 +1,4 @@
-package net.vuega.control_plane.model.LicenseLimits;
+package net.vuega.control_plane.model.licenselimits;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -84,5 +84,4 @@ public class LicenseLimits {
         throw new UnsupportedOperationException("Unimplemented method 'orElseThrow'");
     }
 
-    
 }
