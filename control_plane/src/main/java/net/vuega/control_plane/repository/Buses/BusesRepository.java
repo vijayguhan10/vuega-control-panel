@@ -1,11 +1,11 @@
-package net.vuega.control_plane.repository.Buses;
+package net.vuega.control_plane.repository.buses;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import net.vuega.control_plane.model.Buses.Buses;
+import net.vuega.control_plane.model.buses.Buses;
 import net.vuega.control_plane.util.BusStatus;
 
 @Repository

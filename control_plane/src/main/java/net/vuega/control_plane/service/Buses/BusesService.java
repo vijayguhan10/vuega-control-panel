@@ -1,4 +1,4 @@
-package net.vuega.control_plane.service.Buses;
+package net.vuega.control_plane.service.buses;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.vuega.control_plane.dto.Buses.BusesDto;
-import net.vuega.control_plane.model.Buses.Buses;
-import net.vuega.control_plane.model.SeatLayout.SeatLayout;
-import net.vuega.control_plane.repository.Buses.BusesRepository;
-import net.vuega.control_plane.repository.Operators.OperatorRepository;
-import net.vuega.control_plane.repository.SeatLayout.SeatLayoutRepository;
+import net.vuega.control_plane.dto.buses.BusesDto;
+import net.vuega.control_plane.model.buses.Buses;
+import net.vuega.control_plane.model.seatlayout.SeatLayout;
+import net.vuega.control_plane.repository.buses.BusesRepository;
+import net.vuega.control_plane.repository.operators.OperatorRepository;
+import net.vuega.control_plane.repository.seatlayout.SeatLayoutRepository;
 import net.vuega.control_plane.util.BusStatus;
 
 @Service
@@ -101,7 +101,7 @@ public class BusesService {
         // Update seat layout if seat count changed
         SeatLayout existingLayout = seatLayoutRepository.findById(bus.getLayoutId())
                 .orElseThrow(() -> new RuntimeException("Seat layout not found"));
-        
+
         if (dto.getSeatCount() != existingLayout.getSeatCount()) {
             existingLayout.setSeatCount(dto.getSeatCount());
             seatLayoutRepository.save(existingLayout);

@@ -1,4 +1,4 @@
-package net.vuega.control_plane.controller.Buses;
+package net.vuega.control_plane.controller.buses;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import net.vuega.control_plane.dto.Buses.BusesDto;
-import net.vuega.control_plane.service.Buses.BusesService;
+import net.vuega.control_plane.dto.buses.BusesDto;
+import net.vuega.control_plane.service.buses.BusesService;
 
 @RestController
 @RequestMapping("/api/buses")

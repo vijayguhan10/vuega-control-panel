@@ -1,4 +1,4 @@
-package net.vuega.control_plane.model.Licenses;
+package net.vuega.control_plane.model.licenses;
 
 import java.util.Date;
 
@@ -14,12 +14,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import net.vuega.control_plane.util.LicenseStatus;
 
-
-
 @Entity
 @Table(name = "licenses")
 public class Licenses {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -88,8 +86,5 @@ public class Licenses {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
-
-
-
 
 }

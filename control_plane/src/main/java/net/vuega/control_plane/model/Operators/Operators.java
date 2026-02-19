@@ -1,4 +1,4 @@
-package net.vuega.control_plane.model.Operators;
+package net.vuega.control_plane.model.operators;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

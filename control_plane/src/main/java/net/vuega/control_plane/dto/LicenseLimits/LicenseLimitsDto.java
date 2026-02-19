@@ -1,4 +1,4 @@
-package net.vuega.control_plane.dto.LicenseLimits;
+package net.vuega.control_plane.dto.licenselimits;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
