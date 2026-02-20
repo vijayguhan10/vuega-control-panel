@@ -17,6 +17,8 @@ public interface LicenseRepository extends JpaRepository<Licenses, Long> {
 
     boolean existsByLicenseId(long licenseId, String licenseKey);
 
+    boolean existsByLicenseKey(String licenseKey);
+
     @Modifying
     @Query("delete from Licenses l where l.licenseId = :licenseId")
     int deleteByLicenseId(@Param("licenseId") long licenseId);
