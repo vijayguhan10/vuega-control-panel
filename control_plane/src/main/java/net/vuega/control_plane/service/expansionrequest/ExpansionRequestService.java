@@ -2,6 +2,8 @@ package net.vuega.control_plane.service.expansionrequest;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +17,8 @@ import net.vuega.control_plane.util.ExpansionRequestStatus;
 @Transactional
 public class ExpansionRequestService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ExpansionRequestService.class);
+
     private final ExpansionRequestRepository repository;
     private final OperatorRepository operatorRepository;
 
@@ -25,9 +29,7 @@ public class ExpansionRequestService {
 
     // ================= CREATE =================
     public ExpansionRequestDto createRequest(ExpansionRequestDto dto) {
-
-        if (dto == null)
-            throw new IllegalArgumentException("Request body cannot be null");
+        logger.info("Creating expansion request for operator: {}", dto.getOperatorId());
 
         if (dto.getOperatorId() == null)
             throw new IllegalArgumentException("Operator ID is required");
@@ -48,6 +50,7 @@ public class ExpansionRequestService {
         request.setStatus(ExpansionRequestStatus.PENDING);
 
         ExpansionRequestModel saved = repository.save(request);
+        logger.debug("Expansion request created with ID: {}", saved.getRequestId());
 
         return convertToDto(saved);
     }
@@ -55,6 +58,7 @@ public class ExpansionRequestService {
     // ================= GET ALL =================
     @Transactional(readOnly = true)
     public List<ExpansionRequestDto> getAllRequests() {
+        logger.info("Fetching all expansion requests");
 
         return repository.findAll()
                 .stream()
@@ -64,9 +68,13 @@ public class ExpansionRequestService {
 
     // ================= APPROVE =================
     public ExpansionRequestDto approveRequest(Long id) {
+        logger.info("Approving expansion request with ID: {}", id);
 
         ExpansionRequestModel request = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Expansion request not found"));
+                .orElseThrow(() -> {
+                    logger.error("Expansion request not found with ID: {}", id);
+                    return new IllegalArgumentException("Expansion request not found");
+                });
 
         if (request.getStatus() != ExpansionRequestStatus.PENDING)
             throw new IllegalStateException("Request already processed");
@@ -74,15 +82,20 @@ public class ExpansionRequestService {
         request.setStatus(ExpansionRequestStatus.APPROVED);
 
         ExpansionRequestModel updated = repository.save(request);
+        logger.debug("Expansion request approved with ID: {}", id);
 
         return convertToDto(updated);
     }
 
     // ================= REJECT =================
     public ExpansionRequestDto rejectRequest(Long id) {
+        logger.info("Rejecting expansion request with ID: {}", id);
 
         ExpansionRequestModel request = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Expansion request not found"));
+                .orElseThrow(() -> {
+                    logger.error("Expansion request not found with ID: {}", id);
+                    return new IllegalArgumentException("Expansion request not found");
+                });
 
         if (request.getStatus() != ExpansionRequestStatus.PENDING)
             throw new IllegalStateException("Request already processed");
@@ -90,6 +103,7 @@ public class ExpansionRequestService {
         request.setStatus(ExpansionRequestStatus.REJECTED);
 
         ExpansionRequestModel updated = repository.save(request);
+        logger.debug("Expansion request rejected with ID: {}", id);
 
         return convertToDto(updated);
     }
