@@ -10,11 +10,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import net.vuega.control_plane.util.ExpansionRequestFor;
 import net.vuega.control_plane.util.ExpansionRequestStatus;
 
 @Entity
 @Table(name = "expansion_requests")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ExpansionRequestModel {
 
     @Id
@@ -36,46 +42,4 @@ public class ExpansionRequestModel {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ExpansionRequestStatus status;
-
-    // Getters
-    public Long getRequestId() {
-        return requestId;
-    }
-
-    public Long getOperatorId() {
-        return operatorId;
-    }
-
-    public ExpansionRequestFor getRequestFor() {
-        return requestFor;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public ExpansionRequestStatus getStatus() {
-        return status;
-    }
-
-    // Setters
-    public void setRequestId(Long requestId) {
-        this.requestId = requestId;
-    }
-
-    public void setOperatorId(Long operatorId) {
-        this.operatorId = operatorId;
-    }
-
-    public void setRequestFor(ExpansionRequestFor requestFor) {
-        this.requestFor = requestFor;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
-    }
-
-    public void setStatus(ExpansionRequestStatus status) {
-        this.status = status;
-    }
 }
