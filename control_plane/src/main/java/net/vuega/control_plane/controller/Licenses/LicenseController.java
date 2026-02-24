@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.vuega.control_plane.dto.common.ApiResponse;
 import net.vuega.control_plane.dto.licenses.LicensesDto;
 import net.vuega.control_plane.service.licenses.LicenseService;
 
@@ -27,33 +28,50 @@ public class LicenseController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<LicensesDto>> getAllLicenses() {
-        return ResponseEntity.ok(licenseService.getAllLicenses());
+    public ResponseEntity<ApiResponse<List<LicensesDto>>> getAllLicenses() {
+        List<LicensesDto> licenses = licenseService.getAllLicenses();
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Licenses fetched successfully",
+                licenses));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LicensesDto> getLicenseById(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<LicensesDto>> getLicenseById(@PathVariable Long id) {
         LicensesDto dto = licenseService.getLicenseById(id)
                 .orElseThrow(() -> new RuntimeException("License not found"));
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "License fetched successfully",
+                dto));
     }
 
     @PostMapping("/")
-    public ResponseEntity<LicensesDto> createLicense(@RequestBody LicensesDto dto) {
+    public ResponseEntity<ApiResponse<LicensesDto>> createLicense(@RequestBody LicensesDto dto) {
         LicensesDto created = licenseService.createLicense(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ApiResponse<>(
+                        HttpStatus.CREATED.value(),
+                        "License created successfully",
+                        created));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LicensesDto> updateLicense(@PathVariable Long id, @RequestBody LicensesDto dto) {
+    public ResponseEntity<ApiResponse<LicensesDto>> updateLicense(@PathVariable Long id, @RequestBody LicensesDto dto) {
         LicensesDto updated = licenseService.updateLicense(id, dto);
-        return ResponseEntity.ok(updated);
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "License updated successfully",
+                updated));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLicense(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteLicense(@PathVariable Long id) {
         licenseService.deleteLicense(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "License deleted successfully",
+                null));
     }
 
 }

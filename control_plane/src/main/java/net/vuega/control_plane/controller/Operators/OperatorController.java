@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.vuega.control_plane.dto.common.ApiResponse;
 import net.vuega.control_plane.dto.operators.OperatorsDto;
 import net.vuega.control_plane.service.operators.OperatorService;
 
@@ -27,42 +28,59 @@ public class OperatorController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<OperatorsDto>> getAllOperators() {
-        return ResponseEntity.ok(operatorService.getAllOperators());
+    public ResponseEntity<ApiResponse<List<OperatorsDto>>> getAllOperators() {
+        List<OperatorsDto> operators = operatorService.getAllOperators();
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Operators fetched successfully",
+                operators));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OperatorsDto> getOperatorById(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<OperatorsDto>> getOperatorById(@PathVariable Long id) {
 
         OperatorsDto dto = operatorService.getOperatorById(id)
                 .orElseThrow(() -> new RuntimeException("Operator not found"));
 
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Operator fetched successfully",
+                dto));
     }
 
     @PostMapping("/")
-    public ResponseEntity<OperatorsDto> createOperator(@RequestBody OperatorsDto dto) {
+    public ResponseEntity<ApiResponse<OperatorsDto>> createOperator(@RequestBody OperatorsDto dto) {
 
         OperatorsDto created = operatorService.createOperator(dto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ApiResponse<>(
+                        HttpStatus.CREATED.value(),
+                        "Operator created successfully",
+                        created));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OperatorsDto> updateOperator(
+    public ResponseEntity<ApiResponse<OperatorsDto>> updateOperator(
             @PathVariable Long id,
             @RequestBody OperatorsDto dto) {
 
         OperatorsDto updated = operatorService.updateOperator(id, dto);
 
-        return ResponseEntity.ok(updated);
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Operator updated successfully",
+                updated));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOperator(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteOperator(@PathVariable Long id) {
 
         operatorService.deleteOperator(id);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Operator deleted successfully",
+                null));
     }
 }
