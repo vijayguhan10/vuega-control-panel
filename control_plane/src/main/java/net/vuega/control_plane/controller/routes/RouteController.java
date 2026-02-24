@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.vuega.control_plane.dto.common.ApiResponse;
 import net.vuega.control_plane.dto.routes.RouteDto;
 import net.vuega.control_plane.service.routes.RouteService;
 
@@ -27,32 +28,51 @@ public class RouteController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<RouteDto> createRoute(@RequestBody RouteDto dto) {
+    public ResponseEntity<ApiResponse<RouteDto>> createRoute(@RequestBody RouteDto dto) {
+        RouteDto created = routeService.createRoute(dto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(routeService.createRoute(dto));
+                .body(new ApiResponse<>(
+                        HttpStatus.CREATED.value(),
+                        "Route created successfully",
+                        created));
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<RouteDto>> getAllRoutes() {
-        return ResponseEntity.ok(routeService.getAllRoutes());
+    public ResponseEntity<ApiResponse<List<RouteDto>>> getAllRoutes() {
+        List<RouteDto> routes = routeService.getAllRoutes();
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Routes fetched successfully",
+                routes));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RouteDto> getRoute(@PathVariable Long id) {
-        return ResponseEntity.ok(routeService.getRouteById(id));
+    public ResponseEntity<ApiResponse<RouteDto>> getRoute(@PathVariable Long id) {
+        RouteDto route = routeService.getRouteById(id);
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Route fetched successfully",
+                route));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RouteDto> updateRoute(
+    public ResponseEntity<ApiResponse<RouteDto>> updateRoute(
             @PathVariable Long id,
             @RequestBody RouteDto dto) {
-        return ResponseEntity.ok(routeService.updateRoute(id, dto));
+        RouteDto updated = routeService.updateRoute(id, dto);
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Route updated successfully",
+                updated));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deactivateRoute(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deactivateRoute(@PathVariable Long id) {
         routeService.deactivateRoute(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Route deactivated successfully",
+                null));
     }
 }

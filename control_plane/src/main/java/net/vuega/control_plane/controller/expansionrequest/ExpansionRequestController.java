@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import net.vuega.control_plane.dto.common.ApiResponse;
 import net.vuega.control_plane.dto.expansionrequest.ExpansionRequestDto;
 import net.vuega.control_plane.service.expansionrequest.ExpansionRequestService;
 
@@ -30,51 +31,75 @@ public class ExpansionRequestController {
 
     // ================= CREATE =================
     @PostMapping("/")
-    public ResponseEntity<ExpansionRequestDto> createRequest(
+    public ResponseEntity<ApiResponse<ExpansionRequestDto>> createRequest(
             @Valid @RequestBody ExpansionRequestDto dto) {
         logger.info("POST request to create expansion request");
 
         ExpansionRequestDto response = service.createRequest(dto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ApiResponse<>(
+                        HttpStatus.CREATED.value(),
+                        "Expansion request created successfully",
+                        response));
     }
 
     // ================= GET ALL =================
     @GetMapping("/")
-    public ResponseEntity<List<ExpansionRequestDto>> getAllRequests() {
+    public ResponseEntity<ApiResponse<List<ExpansionRequestDto>>> getAllRequests() {
         logger.info("GET request to fetch all expansion requests");
 
-        return ResponseEntity.ok(service.getAllRequests());
+        List<ExpansionRequestDto> requests = service.getAllRequests();
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Expansion requests fetched successfully",
+                requests));
     }
 
     // ================= APPROVE =================
     @PutMapping("/{id}/approve")
-    public ResponseEntity<ExpansionRequestDto> approveRequest(
+    public ResponseEntity<ApiResponse<ExpansionRequestDto>> approveRequest(
             @PathVariable Long id) {
         logger.info("PUT request to approve expansion request with ID: {}", id);
 
-        return ResponseEntity.ok(service.approveRequest(id));
+        ExpansionRequestDto approved = service.approveRequest(id);
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Expansion request approved successfully",
+                approved));
     }
 
     // ================= REJECT =================
     @PutMapping("/{id}/reject")
-    public ResponseEntity<ExpansionRequestDto> rejectRequest(
+    public ResponseEntity<ApiResponse<ExpansionRequestDto>> rejectRequest(
             @PathVariable Long id) {
         logger.info("PUT request to reject expansion request with ID: {}", id);
 
-        return ResponseEntity.ok(service.rejectRequest(id));
+        ExpansionRequestDto rejected = service.rejectRequest(id);
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Expansion request rejected successfully",
+                rejected));
     }
 
     // ================= EXCEPTION HANDLERS =================
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
+    public ResponseEntity<ApiResponse<Void>> handleIllegalArgumentException(IllegalArgumentException ex) {
         logger.warn("Illegal argument exception: {}", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponse<>(
+                        HttpStatus.BAD_REQUEST.value(),
+                        ex.getMessage(),
+                        null));
     }
 
     @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<String> handleIllegalStateException(IllegalStateException ex) {
+    public ResponseEntity<ApiResponse<Void>> handleIllegalStateException(IllegalStateException ex) {
         logger.warn("Illegal state exception: {}", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ApiResponse<>(
+                        HttpStatus.CONFLICT.value(),
+                        ex.getMessage(),
+                        null));
     }
 }

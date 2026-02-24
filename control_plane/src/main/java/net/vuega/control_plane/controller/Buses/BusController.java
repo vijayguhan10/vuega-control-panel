@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.vuega.control_plane.dto.buses.BusesDto;
+import net.vuega.control_plane.dto.common.ApiResponse;
 import net.vuega.control_plane.service.buses.BusesService;
 
 @RestController
@@ -27,31 +28,50 @@ public class BusController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<BusesDto> createBus(@RequestBody BusesDto dto) {
+    public ResponseEntity<ApiResponse<BusesDto>> createBus(@RequestBody BusesDto dto) {
         BusesDto created = busService.createBus(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ApiResponse<>(
+                        HttpStatus.CREATED.value(),
+                        "Bus created successfully",
+                        created));
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<BusesDto>> getAllBuses() {
-        return ResponseEntity.ok(busService.getAllBuses());
+    public ResponseEntity<ApiResponse<List<BusesDto>>> getAllBuses() {
+        List<BusesDto> buses = busService.getAllBuses();
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Buses fetched successfully",
+                buses));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BusesDto> getBus(@PathVariable Long id) {
-        return ResponseEntity.ok(busService.getBusById(id));
+    public ResponseEntity<ApiResponse<BusesDto>> getBus(@PathVariable Long id) {
+        BusesDto bus = busService.getBusById(id);
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Bus fetched successfully",
+                bus));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BusesDto> updateBus(
+    public ResponseEntity<ApiResponse<BusesDto>> updateBus(
             @PathVariable Long id,
             @RequestBody BusesDto dto) {
-        return ResponseEntity.ok(busService.updateBus(id, dto));
+        BusesDto updated = busService.updateBus(id, dto);
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Bus updated successfully",
+                updated));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deactivateBus(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deactivateBus(@PathVariable Long id) {
         busService.deactivateBus(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Bus deactivated successfully",
+                null));
     }
 }
