@@ -20,6 +20,7 @@ jobs:
           java-version: '21'
 
       - name: Build with Maven
+        working-directory: control_plane
         run: mvn clean package -DskipTests
 
       - name: Copy JAR to EC2
@@ -28,7 +29,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: "target/app.jar"
+          source: "control_plane/target/app.jar"
           target: "/home/server/control-pannel-backend/vuega-control-panel/control_plane/target/"
 
       - name: Restart Spring Boot Service
