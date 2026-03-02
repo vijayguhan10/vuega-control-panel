@@ -81,7 +81,7 @@ jobs:
           secure: true
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "❌ Spring Boot Deployment Failed"
+          subject: "❌ Control Panel Backend Deployment Failed"
           to: "lingesh480500@gmail.com,vijayguhan10@gmail.com"
           from: ${{ secrets.EMAIL_USERNAME }}
           body: |
