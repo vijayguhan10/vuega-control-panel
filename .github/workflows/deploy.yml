@@ -58,7 +58,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "✅ Control Panel Backend Deployment Successful"
-          to: "lingesh480500@gmail.com"
+          to: "lingesh480500@gmail.com,vijayguhan10@gmail.com"
           from: ${{ secrets.EMAIL_USERNAME }}
           body: |
             ✅ Deployment Successful!
@@ -82,7 +82,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "❌ Spring Boot Deployment Failed"
-          to: "lingesh480500@gmail.com"
+          to: "lingesh480500@gmail.com,vijayguhan10@gmail.com"
           from: ${{ secrets.EMAIL_USERNAME }}
           body: |
             ❌ Deployment Failed!
