@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import net.vuega.control_plane.dto.expansionrequest.ExpansionRequestDto;
-import net.vuega.control_plane.model.expansionrequest.ExpansionRequestModel;
+import net.vuega.control_plane.model.expansionrequest.ExpansionRequest;
 import net.vuega.control_plane.repository.expansionrequest.ExpansionRequestRepository;
 import net.vuega.control_plane.repository.operators.OperatorRepository;
 import net.vuega.control_plane.util.ExpansionRequestStatus;
@@ -43,13 +43,13 @@ public class ExpansionRequestService {
         if (dto.getCount() == null || dto.getCount() <= 0)
             throw new IllegalArgumentException("Count must be greater than 0");
 
-        ExpansionRequestModel request = new ExpansionRequestModel();
+        ExpansionRequest request = new ExpansionRequest();
         request.setOperatorId(dto.getOperatorId());
         request.setRequestFor(dto.getRequestFor());
         request.setCount(dto.getCount());
         request.setStatus(ExpansionRequestStatus.PENDING);
 
-        ExpansionRequestModel saved = repository.save(request);
+        ExpansionRequest saved = repository.save(request);
         logger.debug("Expansion request created with ID: {}", saved.getRequestId());
 
         return convertToDto(saved);
@@ -70,7 +70,7 @@ public class ExpansionRequestService {
     public ExpansionRequestDto approveRequest(Long id) {
         logger.info("Approving expansion request with ID: {}", id);
 
-        ExpansionRequestModel request = repository.findById(id)
+        ExpansionRequest request = repository.findById(id)
                 .orElseThrow(() -> {
                     logger.error("Expansion request not found with ID: {}", id);
                     return new IllegalArgumentException("Expansion request not found");
@@ -81,7 +81,7 @@ public class ExpansionRequestService {
 
         request.setStatus(ExpansionRequestStatus.APPROVED);
 
-        ExpansionRequestModel updated = repository.save(request);
+        ExpansionRequest updated = repository.save(request);
         logger.debug("Expansion request approved with ID: {}", id);
 
         return convertToDto(updated);
@@ -91,7 +91,7 @@ public class ExpansionRequestService {
     public ExpansionRequestDto rejectRequest(Long id) {
         logger.info("Rejecting expansion request with ID: {}", id);
 
-        ExpansionRequestModel request = repository.findById(id)
+        ExpansionRequest request = repository.findById(id)
                 .orElseThrow(() -> {
                     logger.error("Expansion request not found with ID: {}", id);
                     return new IllegalArgumentException("Expansion request not found");
@@ -102,14 +102,14 @@ public class ExpansionRequestService {
 
         request.setStatus(ExpansionRequestStatus.REJECTED);
 
-        ExpansionRequestModel updated = repository.save(request);
+        ExpansionRequest updated = repository.save(request);
         logger.debug("Expansion request rejected with ID: {}", id);
 
         return convertToDto(updated);
     }
 
     // ================= MAPPER =================
-    private ExpansionRequestDto convertToDto(ExpansionRequestModel request) {
+    private ExpansionRequestDto convertToDto(ExpansionRequest request) {
 
         return new ExpansionRequestDto(
                 request.getRequestId(),

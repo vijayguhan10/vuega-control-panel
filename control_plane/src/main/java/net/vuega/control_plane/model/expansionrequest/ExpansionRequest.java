@@ -21,7 +21,7 @@ import net.vuega.control_plane.util.ExpansionRequestStatus;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExpansionRequestModel {
+public class ExpansionRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
